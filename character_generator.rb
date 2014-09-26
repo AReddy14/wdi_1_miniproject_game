@@ -39,4 +39,14 @@ class Character
 		@mp = (.5*ma + 2*res + 7)
 		@dex = 3+rand(1..7)
 	end
+
+	def fighter_archtype
+		@str = 3+rand(1..12)
+		@vit = 3+rand(1..12)
+		@hp = (.5*str + 2*vit + 10)
+		@ma = 3+rand(1..7)
+		@res = 3+rand(1..8)
+		@mp = (.5*ma + 2*res + 5)
+		@dex = 3+rand(1..10)
+	end
 end
