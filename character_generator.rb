@@ -4,7 +4,7 @@ require 'pry'
 class Character
 	#attr_accessor :hp, :str, :ma, :vit, :dex, :res, :mp
 	#I don't want them to be able to just set their stats according to their own whims
-	def initialize(hp=1,mp=0,str=0,ma=0,dex=0,vit=0,res=0)
+	def initialize(hp=1,mp=0,str=0,ma=0,dex=0,vit=0,res=0)#just literally sets up everything
 		@hp = hp
 		@mp = mp
 		@str = str
@@ -13,9 +13,10 @@ class Character
 		@vit = vit
 		@res = res
 		@job = "none"
+		@lvl = 1
 	end
 
-	def random_stat_distribution
+	def random_stat_distribution#this is intended to allow the player to pick have a generic path where they don't specialize. I might just comment this section out though. 
 		@str = 3+rand(1..10)
 		@vit = 3+rand(1..10)
 		@hp = (@str/2 + 2*@vit + 10)
@@ -28,8 +29,14 @@ class Character
 	def stat_dist_class_archtype(archtype)
 		if archtype == "wizard"
 			wizard_archtype
-		else
-			
+		elsif archtype == "cleric"
+			cleric_archtype
+		elsif archtype == "fighter"
+			fighter_archtype
+		elsif archtype == "rogue"
+			rogue_archtype
+		elsif archtype == "paladin"
+			paladin_archtype
 		end
 	end
 
@@ -99,23 +106,23 @@ class Character
 			@dex = @dex + rand(1..3)
 		elsif @job == "Cleric"
 			@str = @str + rand(1..3)
-			@vit = @vit + rand(2..3)
-			@hp = @hp + rand(5..10)
-			@ma = @ma + rand(0..2)
-			@res = @res + rand(1..3)
-			@mp = @mp + rand(1..5)
+			@vit = @vit + rand(1..3)
+			@hp = @hp + rand(5..7)
+			@ma = @ma + rand(2..3)
+			@res = @res + rand(2..3)
+			@mp = @mp + rand(3..7)
 			@dex = @dex + rand(1..3)
 		elsif @job == "Rogue"
 			@str = @str + rand(1..3)
-			@vit = @vit + rand(2..3)
-			@hp = @hp + rand(5..10)
+			@vit = @vit + rand(1..3)
+			@hp = @hp + rand(5..6)
 			@ma = @ma + rand(0..2)
 			@res = @res + rand(1..3)
 			@mp = @mp + rand(1..5)
-			@dex = @dex + rand(1..3)
+			@dex = @dex + rand(2..3)
 		elsif @job == "Fighter"
-			@str = @str + rand(1..3)
-			@vit = @vit + rand(2..3)
+			@str = @str + rand(2..3)
+			@vit = @vit + rand(1..3)
 			@hp = @hp + rand(5..10)
 			@ma = @ma + rand(0..2)
 			@res = @res + rand(1..3)
@@ -123,14 +130,14 @@ class Character
 			@dex = @dex + rand(1..3)
 		elsif @job == "Wizard"
 			@str = @str + rand(1..3)
-			@vit = @vit + rand(2..3)
+			@vit = @vit + rand(1..3)
 			@hp = @hp + rand(5..10)
-			@ma = @ma + rand(0..2)
+			@ma = @ma + rand(2..3)
 			@res = @res + rand(1..3)
-			@mp = @mp + rand(1..5)
+			@mp = @mp + rand(3..7)
 			@dex = @dex + rand(1..3)
 		end
-
+		@lvl += 1
 	end
 
 end
