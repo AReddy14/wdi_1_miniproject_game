@@ -230,7 +230,8 @@ end
 play_again = true
 game_1 = Game.new
 monster_1 = NonPlayerCharacter.new
-game_1.characters
+game_1.characters << PlayerCharacter.new
+#I set this up to prevent the program from failing if the user doesn't choose to create a character the first time through the loop. 
 
 while play_again
 	puts "Welcome to Battle Arena Omega Triple Xtra Large. Here you get to battle your character against a monster. Good luck and have fun."
@@ -251,6 +252,11 @@ while play_again
 	else
 		puts "Error. You must input y or n to say yes or no."
 	end
+	fighting = true
+	while fighting
+		
+		fighting = false
+	end
 
 	puts "Do you want to play again?(y/n)"
 	repeat = gets.chomp.downcase
@@ -261,7 +267,7 @@ while play_again
 		play_again = true
 	else
 		puts "something has gone wrong"
-		exit	
+		exit
 	end
 end
 
