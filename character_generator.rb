@@ -29,6 +29,25 @@ class Game
 		#I want it to heal for half of the magic stat
 		@damage = @damage - base/2
 	end
+
+	def defend(vit, attack)
+		damage_taken(attack, vit)
+	end
+
+	def display_options
+		puts "Attack 		Defend"
+	end
+
+	def wizard_options
+		display_options
+		puts "Magic Missile"
+	end
+
+	def cleric_options
+		display_options
+		puts "Heal"
+	end
+
 	#remember that the monster replaces itself everytime it is created. 
 end
 class Character < Game
@@ -58,6 +77,10 @@ class Character < Game
 
 	def get_hp
 		@hp
+	end
+
+	def get_job
+		@job
 	end
 
 	def random_stat_distribution#this is intended to allow the player to pick have a generic path where they don't specialize. I might just comment this section out though. 
@@ -267,7 +290,16 @@ while play_again
 	end
 	fighting = true
 	while fighting
+		#following displays available options
+		if game_1.characters.last.get_job == "Cleric"
+			game_1.characters.last.cleric_options
+		elsif game_1.characters.last.get_job == "Wizard"
+			game_1.characters.last.wizard_options
+		else
+			game_1.characters.last.display_options
+		end
 
+		#This calculates damage done by monster to player. Will need to add an if so that I can use defend to increase defense. 
 		game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
 		puts game_1.characters.last.get_damage
 		fighting = false
