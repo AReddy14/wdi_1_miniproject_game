@@ -10,9 +10,9 @@ class Game
 
 	def damage_taken(attacker, defender)#take in the str of the attacker and the vit of the defender. damage shall be calculated by str - vit, if that is <= 0 the damage shall be 1. 
 		if (attacker - defender) <= 0
-			@damage += 1
+			return @damage = @damage + 1
 		else
-			@damage = @damage + (attacker - defender)
+			return @damage = @damage + (attacker - defender)
 		end
 		#This will be recorded in the same instance that It is called. 
 	end
@@ -45,6 +45,18 @@ class Character < Game
 		@job = "none"
 		@lvl = 1
 		@name = "random extra #386"
+	end
+
+	def get_str
+		@str
+	end
+
+	def get_vit
+		@vit
+	end
+
+	def get_hp
+		@hp
 	end
 
 	def random_stat_distribution#this is intended to allow the player to pick have a generic path where they don't specialize. I might just comment this section out though. 
@@ -254,7 +266,9 @@ while play_again
 	end
 	fighting = true
 	while fighting
-		
+
+		game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
+		puts game_1.characters.last.get_damage
 		fighting = false
 	end
 
