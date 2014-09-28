@@ -17,6 +17,10 @@ class Game
 		#This will be recorded in the same instance that It is called. 
 	end
 
+	def get_damage
+		@damage
+	end
+
 	def display_damage
 		puts "Damage: " + @damage.to_s
 	end
@@ -131,6 +135,10 @@ class PlayerCharacter < Character
 		@name = gets.chomp
 	end
 
+	def get_level
+		@lvl
+	end
+
 	def level_up
 		if @job == "Paladin"
 			@str = @str + rand(1..3)
@@ -221,21 +229,25 @@ end
 
 play_again = true
 game_1 = Game.new
+monster_1 = NonPlayerCharacter.new
+game_1.characters
 
 while play_again
 	puts "Welcome to Battle Arena Omega Triple Xtra Large. Here you get to battle your character against a monster. Good luck and have fun."
 
-	puts "Do you want to create a new character?(y/n)"
+	puts "Do you want to create a new character?(y/n). Warning: If this is your first time through you must enter y in order to play"
 	create = gets.chomp.downcase
 
 	if create == "y"
 		game_1.characters << PlayerCharacter.new
-		game_1.characters[0].change_name
+		game_1.characters.last.change_name
 		puts "What class are you using? Paladin, Fighter, Rogue, Wizard or Cleric?"
 		chosen_class  = gets.chomp.downcase
-		game_1.characters[0].stat_dist_class_archtype(chosen_class)
+		game_1.characters.last.stat_dist_class_archtype(chosen_class)
+
+		monster_1.adjust_monster_level(game_1.characters.last.get_level)
 	elsif create == "n"
-		
+		monster_1.adjust_monster_level(game_1.characters.last.get_level)
 	else
 		puts "Error. You must input y or n to say yes or no."
 	end
