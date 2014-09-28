@@ -1,6 +1,11 @@
 require 'pry'
 #Creating a character generator. Probably going to just work based off of D&D or another rpg maybe ff tactics
 #The game will have to have at least two arrays as part of its design, one to save all PCs and one for NPCs
+class Game
+	def initialize
+		@character_list = [] #this is intended to give the player the ability to switch characters mid-game and play as that character
+	end
+end
 class Character
 	#attr_accessor :hp, :str, :ma, :vit, :dex, :res, :mp
 	#I don't want them to be able to just set their stats according to their own whims
@@ -139,7 +144,6 @@ class Character
 		end
 		@lvl += 1
 	end
-
 end
 
 character_1 = Character.new
