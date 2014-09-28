@@ -1,3 +1,4 @@
+require 'pry'
 #Creating a character generator. Probably going to just work based off of D&D or another rpg maybe ff tactics
 #The game will have to have at least two arrays as part of its design, one to save all PCs and one for NPCs
 class Character
@@ -16,10 +17,10 @@ class Character
 	def random_stat_distribution
 		@str = 3+rand(1..10)
 		@vit = 3+rand(1..10)
-		@hp = (.5*@str + 2*@vit + 10).to_i
+		@hp = (@str/2 + 2*@vit + 10)
 		@ma = 3+rand(1..10)
 		@res = 3+rand(1..10)
-		@mp = (.5*@ma + 2*@res + 5).to_i
+		@mp = (@ma/2 + 2*@res + 5)
 		@dex = 3+rand(1..10)
 	end
 
@@ -34,51 +35,56 @@ class Character
 	def wizard_archtype
 		@str = 3+rand(1..5)
 		@vit = 3+rand(1..7)
-		@hp = (.5*str + 2*vit + 8)
+		@hp = (@str/2 + 2*@vit + 8)
 		@ma = 3+rand(5..15)
 		@res = 3+rand(5..17)
-		@mp = (.5*ma + 2*res + 7)
+		@mp = (@ma/2 + 2*@res + 7)
 		@dex = 3+rand(1..7)
 	end
 
 	def fighter_archtype
 		@str = 3+rand(5..15)
 		@vit = 3+rand(3..12)
-		@hp = (.5*str + 2*vit + 10)
+		@hp = (@str/2 + 2*@vit + 10)
 		@ma = 3+rand(1..7)
 		@res = 3+rand(1..8)
-		@mp = (.5*ma + 2*res + 5)
+		@mp = (@ma/2 + 2*@res + 5)
 		@dex = 3+rand(1..10)
 	end
 
 	def rogue_archtype
 		@str = 3+rand(3..10)
 		@vit = 3+rand(1..8)
-		@hp = (.5*str + 2*vit + 8)
+		@hp = (@str/2 + 2*@vit + 8)
 		@ma = 3+rand(1..7)
 		@res = 3+rand(1..8)
-		@mp = (.5*ma + 2*res + 5)
+		@mp = (@ma/2 + 2*@res + 5)
 		@dex = 3+rand(5..15)
 	end
 
 	def cleric_archtype
 		@str = 3+rand(3..10)
 		@vit = 3+rand(1..8)
-		@hp = (.5*str + 2*vit + 8)
+		@hp = (@str/2 + 2*@vit + 8)
 		@ma = 3+rand(5..15)
 		@res = 3+rand(5..17)
-		@mp = (.5*ma + 2*res + 5)
+		@mp = (@ma/2 + 2*@res + 5)
 		@dex = 3+rand(1..10)
 	end
 
 	def paladin_archtype
 		@str = 3+rand(3..12)
 		@vit = 3+rand(5..15)
-		@hp = (.5*str + 2*vit + 10)
+		@hp = (@str/2 + 2*@vit + 10)
 		@ma = 3+rand(1..7)
 		@res = 3+rand(1..8)
-		@mp = (.5*ma + 2*res + 5)
+		@mp = (@ma/2 + 2*@res + 5)
 		@dex = 3+rand(1..10)
 	end
 
 end
+
+character_1 = Character.new
+character_1.paladin_archtype
+
+binding.pry
