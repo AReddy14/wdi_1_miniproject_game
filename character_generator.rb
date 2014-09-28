@@ -2,8 +2,9 @@ require 'pry'
 #Creating a character generator. Probably going to just work based off of D&D or another rpg maybe ff tactics
 #The game will have to have at least two arrays as part of its design, one to save all PCs and one for NPCs
 class Game
+	attr_accessor :characters
 	def initialize
-		@character_list = [] #this is intended to give the player the ability to switch characters mid-game and play as that character
+		@characters = [] #this is intended to give the player the ability to switch characters mid-game and play as that character
 	end
 end
 class Character
@@ -151,16 +152,17 @@ end
 class NonPlayerCharacter < Character
 	def initialize
 		super()
-		random_stat_distribution #decided to use this for generic monster stats; testing my understanding of inheritance too.
+		#random_stat_distribution #decided to use this for generic monster stats; testing my understanding of inheritance too.
 	end
 	def adjust_monster_level(p_lvl)#intended formula is basically the original stat plus the difference in levels between lvl 1 monster and player times the random distribution I'm setting up for the monster lvl up. 
 	#problem: The way this is written if I try to adjust the level of the monster after the first time the monster will get ridiculously strong unless the player is still lvl 2 or 1...
+		random_stat_distribution #attempting to fix the above.
 		@str = @str + (p_lvl - 1) * rand(1..3)
 		@vit = @vit + (p_lvl - 1) * rand(1..3)
 		@hp = @hp + (p_lvl - 1) * rand(5..10)
-		@ma = @ma + (p_lvl - 1) * rand(2..3)
+		@ma = @ma + (p_lvl - 1) * rand(0..1)
 		@res = @res + (p_lvl - 1) * rand(1..3)
-		@mp = @mp + (p_lvl - 1) * rand(3..7)
+		@mp = @mp + (p_lvl - 1) * rand(1..5)
 		@dex = @dex + (p_lvl - 1) * rand(1..3)
 	end
 end
@@ -168,6 +170,9 @@ end
 #the code below is just for help testing, will be commented out in final version or in turned in version
 character_1 = PlayerCharacter.new
 character_1.paladin_archtype
+
+game_1 = Game.new
+game_1.characters << character_1
 
 monster_1 = NonPlayerCharacter.new
 
