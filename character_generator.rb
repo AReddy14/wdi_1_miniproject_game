@@ -219,13 +219,47 @@ class NonPlayerCharacter < Character
 	end
 end
 
-#the code below is just for help testing, will be commented out in final version or in turned in version
-character_1 = PlayerCharacter.new
-character_1.paladin_archtype
-
+play_again = true
 game_1 = Game.new
-game_1.characters << character_1
 
-monster_1 = NonPlayerCharacter.new
+while play_again
+	puts "Welcome to Battle Arena Omega Triple Xtra Large. Here you get to battle your character against a monster. Good luck and have fun."
+
+	puts "Do you want to create a new character?(y/n)"
+	create = gets.chomp.downcase
+
+	if create == "y"
+		game_1.characters << PlayerCharacter.new
+		game_1.characters[0].change_name
+		puts "What class are you using? Paladin, Fighter, Rogue, Wizard or Cleric?"
+		chosen_class  = gets.chomp.downcase
+		game_1.characters[0].stat_dist_class_archtype(chosen_class)
+	elsif create == "n"
+		
+	else
+		puts "Error. You must input y or n to say yes or no."
+	end
+
+	puts "Do you want to play again?(y/n)"
+	repeat = gets.chomp.downcase
+
+	if repeat == "n"
+		play_again = false
+	elsif repeat == "y"
+		play_again = true
+	else
+		puts "something has gone wrong"
+		exit	
+	end
+end
+
+#the code below is just for help testing, will be commented out in final version or in turned in version
+# character_1 = PlayerCharacter.new
+# character_1.paladin_archtype
+
+# game_1 = Game.new
+# game_1.characters << character_1
+
+# monster_1 = NonPlayerCharacter.new
 
 binding.pry
