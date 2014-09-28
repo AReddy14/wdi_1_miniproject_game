@@ -5,14 +5,26 @@ class Game
 	attr_accessor :characters
 	def initialize
 		@characters = [] #this is intended to give the player the ability to switch characters mid-game and play as that character
-		@player_damage = 0
-		@monster_damage = 0
+		@damage = 0
 	end
 
-	def attack(attacker, defender)
-		
+	def damage_taken(attacker, defender)#take in the str of the attacker and the vit of the defender. damage shall be calculated by str - vit, if that is <= 0 the damage shall be 1. 
+		if (attacker - defender) <= 0
+			@damage += 1
+		else
+			@damage = @damage + (attacker - defender)
+		end
+		#This will be recorded in the same instance that It is called. 
 	end
 
+	def display_damage
+		puts "Damage: " + @damage.to_s
+	end
+
+	def heal(base)#cleric exclusive right now.
+		#I want it to heal for half of the magic stat
+		@damage = @damage - base/2
+	end
 	#remember that the monster replaces itself everytime it is created. 
 end
 class Character < Game
