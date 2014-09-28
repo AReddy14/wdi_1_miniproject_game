@@ -42,7 +42,7 @@ class Character
 	end
 
 	def fighter_archtype
-		@str = 3+rand(3..12)
+		@str = 3+rand(5..15)
 		@vit = 3+rand(3..12)
 		@hp = (.5*str + 2*vit + 10)
 		@ma = 3+rand(1..7)
@@ -67,6 +67,16 @@ class Character
 		@hp = (.5*str + 2*vit + 8)
 		@ma = 3+rand(5..15)
 		@res = 3+rand(5..17)
+		@mp = (.5*ma + 2*res + 5)
+		@dex = 3+rand(1..10)
+	end
+
+	def paladin_archtype
+		@str = 3+rand(3..12)
+		@vit = 3+rand(5..15)
+		@hp = (.5*str + 2*vit + 10)
+		@ma = 3+rand(1..7)
+		@res = 3+rand(1..8)
 		@mp = (.5*ma + 2*res + 5)
 		@dex = 3+rand(1..10)
 	end
