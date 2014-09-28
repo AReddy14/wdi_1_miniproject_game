@@ -142,8 +142,14 @@ class Character
 			@mp = @mp + rand(3..7)
 			@dex = @dex + rand(1..3)
 		end
-		@lvl += 1
+		@lvl += 1 #for the NPC's there lvl will be based upon the player level. Probably equal or 1 behind. For enemy lvls I'll probably just multiply the stat increase for 1 lvl by the number of levels the monster has gained. 
 	end
+end
+
+class PlayerCharacter < Character
+end
+
+class NonPlayerCharacter < Character
 end
 
 character_1 = Character.new
