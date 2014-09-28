@@ -20,6 +20,7 @@ class Character
 		@res = res
 		@job = "none"
 		@lvl = 1
+		@name = "random extra #386"
 	end
 
 	def random_stat_distribution#this is intended to allow the player to pick have a generic path where they don't specialize. I might just comment this section out though. 
@@ -46,6 +47,7 @@ class Character
 		end
 	end
 
+	#the archtypes are here in character to make it easier for me to use it to change NPC's to run off the same archtypes if I get away from using a generic monster. 
 	def wizard_archtype
 		@str = 3+rand(1..5)
 		@vit = 3+rand(1..7)
@@ -103,6 +105,12 @@ class Character
 end
 
 class PlayerCharacter < Character
+
+	def change_name
+		puts "Enter your character name."
+		@name = gets.chomp
+	end
+
 	def level_up
 		if @job == "Paladin"
 			@str = @str + rand(1..3)
@@ -147,6 +155,20 @@ class PlayerCharacter < Character
 		end
 		@lvl += 1 #for the NPC's there lvl will be based upon the player level. Probably equal or 1 behind. For enemy lvls I'll probably just multiply the stat increase for 1 lvl by the number of levels the monster has risen above lvl 1. 
 	end
+
+	def show_stats
+		puts @name
+		puts "LVL: " + @lvl.to_s
+		puts "Class: " + @job.to_s
+		puts "HP: " + @hp.to_s
+		puts "MP: " + @mp.to_s
+		puts "Str: " + @str.to_s
+		puts "Dex: " + @dex.to_s
+		puts "Vit: " + @vit.to_s
+		puts "Ma: " + @ma.to_s
+		puts "Res: " + @res.to_s
+	end
+
 end
 
 class NonPlayerCharacter < Character
@@ -154,6 +176,7 @@ class NonPlayerCharacter < Character
 		super()
 		#random_stat_distribution #decided to use this for generic monster stats; testing my understanding of inheritance too.
 	end
+
 	def adjust_monster_level(p_lvl)#intended formula is basically the original stat plus the difference in levels between lvl 1 monster and player times the random distribution I'm setting up for the monster lvl up. 
 	#problem: The way this is written if I try to adjust the level of the monster after the first time the monster will get ridiculously strong unless the player is still lvl 2 or 1...
 		random_stat_distribution #attempting to fix the above.
