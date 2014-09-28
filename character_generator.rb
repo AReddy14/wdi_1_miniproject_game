@@ -5,11 +5,17 @@ class Game
 	attr_accessor :characters
 	def initialize
 		@characters = [] #this is intended to give the player the ability to switch characters mid-game and play as that character
+		@player_damage = 0
+		@monster_damage = 0
+	end
+
+	def attack(attacker, defender)
+		
 	end
 
 	#remember that the monster replaces itself everytime it is created. 
 end
-class Character
+class Character < Game
 	#attr_accessor :hp, :str, :ma, :vit, :dex, :res, :mp
 	#I don't want them to be able to just set their stats according to their own whims
 	def initialize(hp=1,mp=0,str=0,ma=0,dex=0,vit=0,res=0)#just literally sets up everything
