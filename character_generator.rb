@@ -35,6 +35,7 @@ class Character < Game
 	#attr_accessor :hp, :str, :ma, :vit, :dex, :res, :mp
 	#I don't want them to be able to just set their stats according to their own whims
 	def initialize(hp=1,mp=0,str=0,ma=0,dex=0,vit=0,res=0)#just literally sets up everything
+		super()
 		@hp = hp
 		@mp = mp
 		@str = str
