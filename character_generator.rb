@@ -99,7 +99,9 @@ class Character
 		@dex = 3+rand(1..10)
 		@job = "Paladin"
 	end
+end
 
+class PlayerCharacter < Character
 	def level_up
 		if @job == "Paladin"
 			@str = @str + rand(1..3)
@@ -142,17 +144,31 @@ class Character
 			@mp = @mp + rand(3..7)
 			@dex = @dex + rand(1..3)
 		end
-		@lvl += 1 #for the NPC's there lvl will be based upon the player level. Probably equal or 1 behind. For enemy lvls I'll probably just multiply the stat increase for 1 lvl by the number of levels the monster has gained. 
+		@lvl += 1 #for the NPC's there lvl will be based upon the player level. Probably equal or 1 behind. For enemy lvls I'll probably just multiply the stat increase for 1 lvl by the number of levels the monster has risen above lvl 1. 
 	end
 end
 
-class PlayerCharacter < Character
-end
-
 class NonPlayerCharacter < Character
+	def initialize
+		super()
+		random_stat_distribution #decided to use this for generic monster stats; testing my understanding of inheritance too.
+	end
+	def adjust_monster_level(p_lvl)#intended formula is basically the original stat plus the difference in levels between lvl 1 monster and player times the random distribution I'm setting up for the monster lvl up. 
+	#problem: The way this is written if I try to adjust the level of the monster after the first time the monster will get ridiculously strong unless the player is still lvl 2 or 1...
+		@str = @str + (p_lvl - 1) * rand(1..3)
+		@vit = @vit + (p_lvl - 1) * rand(1..3)
+		@hp = @hp + (p_lvl - 1) * rand(5..10)
+		@ma = @ma + (p_lvl - 1) * rand(2..3)
+		@res = @res + (p_lvl - 1) * rand(1..3)
+		@mp = @mp + (p_lvl - 1) * rand(3..7)
+		@dex = @dex + (p_lvl - 1) * rand(1..3)
+	end
 end
 
-character_1 = Character.new
+#the code below is just for help testing, will be commented out in final version or in turned in version
+character_1 = PlayerCharacter.new
 character_1.paladin_archtype
+
+monster_1 = NonPlayerCharacter.new
 
 binding.pry
