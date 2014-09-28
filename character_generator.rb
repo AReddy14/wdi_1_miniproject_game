@@ -6,6 +6,8 @@ class Game
 	def initialize
 		@characters = [] #this is intended to give the player the ability to switch characters mid-game and play as that character
 	end
+
+	#remember that the monster replaces itself everytime it is created. 
 end
 class Character
 	#attr_accessor :hp, :str, :ma, :vit, :dex, :res, :mp
@@ -172,9 +174,18 @@ class PlayerCharacter < Character
 end
 
 class NonPlayerCharacter < Character
-	def initialize
-		super()
-		#random_stat_distribution #decided to use this for generic monster stats; testing my understanding of inheritance too.
+
+	def choose_monster_name
+		chooser = rand(1..3)
+		if chooser == 1
+			@name = "Goblin"
+		elsif chooser == 2
+			@name = "Dire Wolf"
+		elsif chooser == 3
+			@name = "Revenant"
+		else
+			@name = "Error"
+		end
 	end
 
 	def adjust_monster_level(p_lvl)#intended formula is basically the original stat plus the difference in levels between lvl 1 monster and player times the random distribution I'm setting up for the monster lvl up. 
