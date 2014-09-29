@@ -6,6 +6,7 @@ class Game
 	def initialize
 		@characters = [] #this is intended to give the player the ability to switch characters mid-game and play as that character
 		@damage = 0
+		@magic_used = 0
 	end
 
 	def damage_taken(attacker, defender)#take in the str of the attacker and the vit of the defender. damage shall be calculated by str - vit, if that is <= 0 the damage shall be 1. 
@@ -15,6 +16,19 @@ class Game
 			return @damage = @damage + (attacker - defender)
 		end
 		#This will be recorded in the same instance that It is called. 
+	end
+
+	def magic_damage(magic, res)
+		@magic_used = @magic_used + 5
+		if (magic - res) <= 0
+			return @damage = @damage + 1
+		else
+			return @damage = @damage + (magic - res)
+		end
+	end
+
+	def get_magic_used
+		@magic_used
 	end
 
 	def get_damage
@@ -27,11 +41,12 @@ class Game
 
 	def heal(base)#cleric exclusive right now.
 		#I want it to heal for half of the magic stat
+		@magic_used = @magic_used + 5
 		@damage = @damage - base/2
 	end
 
 	def defend(vit, attack)
-		damage_taken(attack, vit)
+		damage_taken(attack, 2*vit)
 	end
 
 	def display_options
@@ -81,6 +96,14 @@ class Character < Game
 
 	def get_job
 		@job
+	end
+
+	def get_magic
+		@ma
+	end
+
+	def get_res
+		@res
 	end
 
 	def random_stat_distribution#this is intended to allow the player to pick have a generic path where they don't specialize. I might just comment this section out though. 
@@ -291,6 +314,7 @@ while play_again
 	fighting = true
 	while fighting
 		#following displays available options
+		puts "What'll you do?"
 		if game_1.characters.last.get_job == "Cleric"
 			game_1.characters.last.cleric_options
 		elsif game_1.characters.last.get_job == "Wizard"
@@ -299,9 +323,26 @@ while play_again
 			game_1.characters.last.display_options
 		end
 
+		action = gets.chomp.downcase
+
+		if action == "magic missile"
+			monster_1.magic_damage(game_1.characters.last.get_magic, monster_1.get_res) 
+			puts "The monster has taken " + monster_1.get_damage.to_s + " damage"
+			puts game_1.characters.last.get_magic_used
+			game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
+		elsif action == "defend"
+			game_1.characters.last.defend(game_1.characters.last.get_vit, monster_1.get_str)
+		elsif action == "heal"
+			game_1.characters.last.heal
+			game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
+		else
+			monster_1.damage_taken(game_1.characters.last.get_str, monster_1.get_vit)
+			game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
+			puts game_1.characters.last.get_damage
+		end
+
 		#This calculates damage done by monster to player. Will need to add an if so that I can use defend to increase defense. 
-		game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
-		puts game_1.characters.last.get_damage
+		
 		fighting = false
 	end
 
