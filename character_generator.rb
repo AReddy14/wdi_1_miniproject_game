@@ -106,6 +106,10 @@ class Character < Game
 		@res
 	end
 
+	def get_mp
+		@mp
+	end
+
 	def random_stat_distribution#this is intended to allow the player to pick have a generic path where they don't specialize. I might just comment this section out though. 
 		@str = 3+rand(1..10)
 		@vit = 3+rand(1..10)
@@ -326,15 +330,30 @@ while play_again
 		action = gets.chomp.downcase
 
 		if action == "magic missile"
-			monster_1.magic_damage(game_1.characters.last.get_magic, monster_1.get_res) 
-			puts "The monster has taken " + monster_1.get_damage.to_s + " damage"
-			puts game_1.characters.last.get_magic_used
-			game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
+			if game_1.characters.last.get_magic_used < game_1.characters.last.get_mp
+				monster_1.magic_damage(game_1.characters.last.get_magic, monster_1.get_res) 
+				puts "The monster has taken " + monster_1.get_damage.to_s + " damage"
+				puts "You've used up " + game_1.characters.last.get_magic_used.to_s + " mp out of " + game_1.characters.last.get_mp.to_s
+				game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
+			else
+				puts "you are out of mp, you attack normally."
+				monster_1.damage_taken(game_1.characters.last.get_str, monster_1.get_vit)
+				game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
+				puts game_1.characters.last.get_damage
+			end
 		elsif action == "defend"
 			game_1.characters.last.defend(game_1.characters.last.get_vit, monster_1.get_str)
 		elsif action == "heal"
-			game_1.characters.last.heal
-			game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
+			if game_1.characters.last.get_magic_used < game_1.characters.last.get_mp
+				game_1.characters.last.heal(game_1.characters.last.get_magic)
+				puts "You've used up " + game_1.characters.last.get_magic_used.to_s + " mp out of " + game_1.characters.last.get_mp.to_s
+				game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
+			else
+				puts "you are out of mp, you attack normally."
+				monster_1.damage_taken(game_1.characters.last.get_str, monster_1.get_vit)
+				game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
+				puts game_1.characters.last.get_damage
+			end
 		else
 			monster_1.damage_taken(game_1.characters.last.get_str, monster_1.get_vit)
 			game_1.characters.last.damage_taken(monster_1.get_str, game_1.characters.last.get_vit)
